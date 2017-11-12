@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.resources.bookMapper" >
+	<resultMap id="bookResult" type="book">
+		<id property="bid" column="bid" />
+		<result property="author" column="author"/>
+		<result property="title" column="title"/>
+		<result property="year" column="byear"/>
+	</resultMap>
+	
+	<select id = "getAll" resultMap = "bookResult">
+   		SELECT bid, author, title, byear FROM book; 
+	</select>
+	<select id="selectBookById" resultType="book" parameterType="int" resultMap="bookResult">
+	    SELECT bid, author, title from book WHERE bid = #{id}
+	</select>
+	<insert id="insertBook" parameterType="book"  keyProperty="id" useGeneratedKeys="true">
+		INSERT into book(title,author,country,imageLink,blanguage,link,pages,byear,category,description,isbn) 
+		VALUES(#{title}, #{author},#{country},#{imageLink},#{language},#{link},#{pages},
+		#{year},#{category},#{description},#{isbn}) 	    
+	</insert>
+	<delete id="deleteBookById"  parameterType="int" >
+		DELETE FROM book WHERE bid = #{id}
+	</delete>
+	<update id="editBook" parameterType="book">
+		UPDATE book SET title=#{title},author=#{author},country=#{country},imageLink=#{imageLink},blanguage=#{language},
+		link=#{link},pages=#{pages},byear=#{year},category=#{category},description=#{description},isbn=#{isbn}
+		WHERE bid=#{bid} 	    
+	</update>
+</mapper> 
